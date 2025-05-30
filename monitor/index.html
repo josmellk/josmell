@@ -1,33 +1,38 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Monitor de Servicios Cloud</title>
-  <link rel="stylesheet" href="central.css">
+  <meta charset="UTF-8" />
+  <title>Monitoreo de Backend</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; }
+    .status-ok { color: green; }
+    .status-error { color: red; }
+  </style>
 </head>
 <body>
   <h1>Estado de los Servicios Backend</h1>
-  <div class="container">
-    <div class="card">
-      <h2>Instancia 1</h2>
-      <div id="status1">Cargando...</div>
-    </div>
-    <div class="card">
-      <h2>Instancia 2</h2>
-      <div id="status2">Cargando...</div>
-    </div>
+
+  <div>
+    <h2>Instancia 1</h2>
+    <div id="status1">Cargando...</div>
   </div>
+  <div>
+    <h2>Instancia 2</h2>
+    <div id="status2">Cargando...</div>
+  </div>
+
   <script>
     async function checkStatus(url, elementId) {
+      const el = document.getElementById(elementId);
       try {
-        const response = await fetch(url + "/api/status");
-        const data = await response.json();
-        document.getElementById(elementId).innerText = data.instance;
-        document.getElementById(elementId).style.color = "green";
+        const res = await fetch(url + "/api/status");
+        if (!res.ok) throw new Error(res.statusText);
+        const data = await res.json();
+        el.textContent = `Instancia activa: ${data.instance}`;
+        el.className = "status-ok";
       } catch (error) {
-        document.getElementById(elementId).innerText = "Error al conectar con " + url;
-        document.getElementById(elementId).style.color = "red";
+        el.textContent = `Error al conectar con ${url}`;
+        el.className = "status-error";
       }
     }
 
@@ -36,8 +41,8 @@
       checkStatus("https://cloud-backend-2-i6bn.onrender.com", "status2");
     }
 
-    setInterval(updateStatuses, 3000);
     updateStatuses();
+    setInterval(updateStatuses, 15000); // refresca cada 15 segundos
   </script>
 </body>
 </html>

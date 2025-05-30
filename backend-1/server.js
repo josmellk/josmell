@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 const port = process.env.PORT || 3000;
-const instanceName = process.env.INSTANCE_NAME || 'Instancia no definida';
+const instanceName = process.env.INSTANCE_NAME || 'Instancia 1';
 
 app.get('/', (req, res) => {
   res.send('Backend activo. Usa /api/status para ver estado.');

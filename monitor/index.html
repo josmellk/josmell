@@ -2,12 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Monitoreo de Backend</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; }
-    .status-ok { color: green; }
-    .status-error { color: red; }
-  </style>
+  <title>Monitoreo de Backends</title>
+  <link rel="stylesheet" href="central.css" />
 </head>
 <body>
   <h1>Estado de los Servicios Backend</h1>
@@ -42,7 +38,7 @@
     }
 
     updateStatuses();
-    setInterval(updateStatuses, 15000); // refresca cada 15 segundos
+    setInterval(updateStatuses, 15000);
   </script>
 </body>
 </html>

@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Monitor de Servicios Cloud</title>
+  <link rel="stylesheet" href="central.css">
+</head>
+<body>
+  <h1>Estado de los Servicios Backend</h1>
+  <div class="container">
+    <div class="card">
+      <h2>Instancia 1</h2>
+      <div id="status1">Cargando...</div>
+    </div>
+    <div class="card">
+      <h2>Instancia 2</h2>
+      <div id="status2">Cargando...</div>
+    </div>
+  </div>
+  <script>
+    async function checkStatus(url, elementId) {
+      try {
+        const response = await fetch(url + "/api/status");
+        const data = await response.json();
+        document.getElementById(elementId).innerText = data.instance;
+        document.getElementById(elementId).style.color = "green";
+      } catch (error) {
+        document.getElementById(elementId).innerText = "Error al conectar con " + url;
+        document.getElementById(elementId).style.color = "red";
+      }
+    }
+
+    function updateStatuses() {
+      checkStatus("https://cloud-backend-1.onrender.com", "status1");
+      checkStatus("https://cloud-backend-2.onrender.com", "status2");
+    }
+
+    setInterval(updateStatuses, 3000);
+    updateStatuses();
+  </script>
+</body>
+</html>
